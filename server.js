@@ -9,6 +9,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // serve static files from public folder
 app.use(express.static(__dirname + '/public'));
 
+
 /************
  * DATABASE *
  ************/
@@ -50,24 +51,37 @@ app.get('/api/todos/search', function search(req, res) {
 });
 
 app.get('/api/todos', function index(req, res) {
-  /* This endpoint responds with all of the todos
-   */
+  /* (GET) endpoint responds with all of the todos */
+  res.json({ data: todos });
+
+
 });
 
 app.post('/api/todos', function create(req, res) {
-  /* This endpoint will add a todo to our "database"
+  /* (POST) This endpoint will add a todo to our "database"
    * and respond with the newly created todo.
    */
+
 });
 
 app.get('/api/todos/:id', function show(req, res) {
-  /* This endpoint will return a single todo with the
+  /* (GET) This endpoint will return a single todo with the
    * id specified in the route parameter (:id)
    */
+  let todoId = req.params.id; //this points to the requested data's id parameter
+
+  // find todo to by its id
+  let foundTodo = todos.filter(function(todo) {
+    return todo._id == todoId;
+  })[0];
+
+  // sending out foundToDo
+  res.json(foundTodo);
+
 });
 
 app.put('/api/todos/:id', function update(req, res) {
-  /* This endpoint will update a single todo with the
+  /* (PUT/PATCH) This endpoint will update a single todo with the
    * id specified in the route parameter (:id) and respond
    * with the newly updated todo.
    */
